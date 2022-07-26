@@ -72,28 +72,32 @@ macro "Contractility" {
 	default_frameinterval = readSettingValue("c1.frameinterval", 0.01);
 	default_windowlength = readSettingValue("c1.windowlength", default_frameinterval*10);
 	default_nwin = readSettingValue("c1.nwin", 0);
-	default_startoffset = readSettingValue("c1.startoffset", 2);
+	default_startoffset = readSettingValue("c1.startoffset", 4);
 	default_qualitythreshold = readSettingValue("c1.qualitythreshold", 50);
 	default_cvthreshold = readSettingValue("c1.cvthreshold", 5);
-	default_blipthreshold = readSettingValue("c1.blipthreshold", 50);
-	default_averagemode = readSettingValue("c1.averagemode", 0);
+	default_blipthreshold = readSettingValue("c1.blipthreshold", 30);
+	default_averagemode = readSettingValue("c1.averagemode", 1);
 	default_normalizeblipframes = readSettingValue("c1.normalizeblipframes", 0);
 	default_filterdata = readSettingBoolean("c1.filterdata", false);
-	default_showintermediate = readSettingBoolean("c1.showintermediate", false);
-	default_showtransients = readSettingBoolean("c1.showtransients", false);
-	default_extendedparameters = readSettingBoolean("c1.extendedparameters", false);
+	default_showintermediate = readSettingBoolean("c1.showintermediate", true);
+	default_showtransients = readSettingBoolean("c1.showtransients", true);
+	default_extendedparameters = readSettingBoolean("c1.extendedparameters", true);
 	default_smoothtransient = readSettingBoolean("c1.smoothtransient", true);
-	default_smoothaverage = readSettingBoolean("c1.smoothaverage", false);
-	default_invertdownstrokesearch = readSettingBoolean("c1.invertdownstrokesearch", false); 
-	default_reportmilliseconds = readSettingBoolean("c1.reportmilliseconds", false);
-	default_saveprofile = readSettingBoolean("c1.saveprofile", false);
-	default_saveresults = readSettingBoolean("c1.saveresults", false);
-	default_saveplots = readSettingBoolean("c1.saveplots", false);
+	default_smoothaverage = readSettingBoolean("c1.smoothaverage", true);
+	default_invertdownstrokesearch = readSettingBoolean("c1.invertdownstrokesearch", true); 
+	default_reportmilliseconds = readSettingBoolean("c1.reportmilliseconds", true);
+	default_saveprofile = readSettingBoolean("c1.saveprofile", true);
+	default_saveresults = readSettingBoolean("c1.saveresults", true);
+	default_saveplots = readSettingBoolean("c1.saveplots", true);
 
+    print("nImages  " + nImages);
 	// Import image sequence if nothing is open already
-	if (nImages==0)
+	if (nImages==0){
+		
 		run("Image Sequence...");
+	}
 
+   print("nImages  " + nImages);
 	// Get stack dimensions
 	getDimensions(width, height, channels, slices, frames);
 	
@@ -109,6 +113,9 @@ macro "Contractility" {
 	dirname = getDirectory("image");
 	dataname = getTitle();
 	FILE_ROOT = dirname + dataname.replace(".tif", "");
+
+	 print("FILE_ROOT  " + FILE_ROOT);
+
 		
 	if (getArgument()=="noask") {	// For batch mode operation
 		BATCH_MODE = true;
@@ -160,7 +167,7 @@ macro "Contractility" {
 		Dialog.addCheckbox("Save profile data (x y) as txt", default_saveprofile);
 		Dialog.addCheckbox("Save results table as csv", default_saveresults);
 		Dialog.addCheckbox("Save plots as png", default_saveplots);
-		Dialog.show();
+		//Dialog.show();
 		
 		image_scaling = Dialog.getNumber();
 		frame_interval = Dialog.getNumber();
@@ -209,6 +216,10 @@ macro "Contractility" {
 		writeSettingBoolean("c1.saveprofile", save_profile);
 		writeSettingBoolean("c1.saveresults", save_results);
 		writeSettingBoolean("c1.saveplots", SAVE_PLOTS);
+
+
+		// Multifolder writing example
+
 	}
 	
 	// Check parameters have sensible values
