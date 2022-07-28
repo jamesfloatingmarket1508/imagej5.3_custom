@@ -167,7 +167,7 @@ macro "Contractility" {
 		Dialog.addCheckbox("Save profile data (x y) as txt", default_saveprofile);
 		Dialog.addCheckbox("Save results table as csv", default_saveresults);
 		Dialog.addCheckbox("Save plots as png", default_saveplots);
-		//Dialog.show();
+		Dialog.show();
 		
 		image_scaling = Dialog.getNumber();
 		frame_interval = Dialog.getNumber();

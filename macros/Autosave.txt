@@ -171,10 +171,20 @@ function doAutoSaveJob(subDir) {
         }
       if ("Dialog"=="Log"); {
         close("Log");
-        }
-      selectWindow("Results");
-      run("Close");
+      }
+      if("Window"=="Result"){
+        selectWindow("Results");
+        run("Close");
+      }  
+      if("Window"=="Log"){
+        selectWindow("Log");
+        run("Close");
+      }
 
+      //
+     // close("*Transient*");
+    
+     
 
 }      
 
