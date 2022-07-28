@@ -16,10 +16,7 @@ listFolderRecursively(parentDir);
           if (endsWith(list[i], "/"))
               listFolderRecursively(""+parentDir+list[i]);
           else{
-            firstFile =  list[i];
-            
-            print("parentDir :" + parentDir );
-             print("lastDir: " +firstFile);
+            firstFile =  list[i];      
             doAutoSaveJob(parentDir+firstFile);
             break;
           }
@@ -29,21 +26,14 @@ listFolderRecursively(parentDir);
 
 
 function doAutoSaveJob(subDir) {
-     print("doAutoSaveJob on the path  " + subDir);
+     print("do automatic Contractility on the path  " + subDir);
 
       var dir1 = subDir;
       setBatchMode(true);
+      run("Image Sequence...", "open=&dir1 sort");    
+      print("run Contractility_test");
 
-   
-
-      print("run Image Sequence...  " + dir1);
-      
-      run("Image Sequence...", "open=&dir1 sort");
-    
-
-
-      print("run Contractility");
-      runMacro("Contractility.ijm");
+      runMacro("ContractilityAutomation.ijm");
       if ("Dialog"=="Average transient"); {
         close("Average transient");
         }
@@ -182,7 +172,11 @@ function doAutoSaveJob(subDir) {
       }
 
       //
-     // close("*Transient*");
+      close("*Transient*");
+      close("*Corrected*");
+      close("*Signal*");
+      close("*Running diff*");
+      close("*1st*");
     
      
 
