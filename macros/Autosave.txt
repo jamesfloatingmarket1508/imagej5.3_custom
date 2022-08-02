@@ -24,16 +24,13 @@ listFolderRecursively(parentDir);
       }
   }
 
-
 function doAutoSaveJob(subDir) {
-     print("do automatic Contractility on the path  " + subDir);
-
+     
       var dir1 = subDir;
       setBatchMode(true);
       run("Image Sequence...", "open=&dir1 sort");    
-      print("run Contractility_test");
-
       runMacro("ContractilityAutomation.ijm");
+      
       if ("Dialog"=="Average transient"); {
         close("Average transient");
         }
@@ -159,17 +156,17 @@ function doAutoSaveJob(subDir) {
       //  saveAs("AVI", dir1 + "Seq" + ".avi"); 
         close("Seq");
         }
-      if ("Dialog"=="Log"); {
+     /* if ("Dialog"=="Log"); {
         close("Log");
-      }
+      }*/
       if("Window"=="Result"){
         selectWindow("Results");
         run("Close");
       }  
-      if("Window"=="Log"){
+     /* if("Window"=="Log"){
         selectWindow("Log");
         run("Close");
-      }
+      }*/
 
       //
       close("*Transient*");

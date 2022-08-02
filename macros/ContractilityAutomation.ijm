@@ -96,7 +96,6 @@ macro "Contractility" {
 		run("Image Sequence...");
 	}
 
-   print("nImages  " + nImages);
 	// Get stack dimensions
 	getDimensions(width, height, channels, slices, frames);
 	
@@ -668,12 +667,17 @@ macro "Contractility" {
 			print(f, xavg[i]+"\t"+yavg[i]);
 		File.close(f);
 		}
+		
 	
+
 	if (save_results) {
 		updateResults();
 		saveAs("results", FILE_ROOT+".csv");
 		}
-		
+	
+		// MEAN ROW
+		extractMeanRowToTxtFile();	
+
 	setBatchMode(false);
 		
 	showStatus("Done");
@@ -1378,3 +1382,31 @@ function savePlot(name) {
 		saveAs("png", fn);
 		}
 	}
+
+
+// James wrote fuction 2 extract Mean data 
+function extractMeanRowToTxtFile(){	
+	path =   dirname+dataname+".csv" ;
+	parent = File.getParent(path) ;
+	originalselectedFolder = File.getParent(parent) ;
+	meanTxtFile = originalselectedFolder + "_MEAN_" +".txt";	
+	headings = split(String.getResultsHeadings);
+	line = dataname+ "	mean  ";
+	
+
+	for (row=nResults-1; row>=0; row--) {
+			line = dataname+ "	mean  ";
+			mean  = getResultLabel(row);
+	        if(mean == "Mean"){
+				for (col=1; col<lengthOf(headings); col++){
+			        line = line + getResultString(headings[col],row) + "  ";
+			     }   
+			     // append mean row to the end of file  
+			     File.append(line , meanTxtFile);
+			     break;
+		     }
+	
+	}
+}
+	  
+
